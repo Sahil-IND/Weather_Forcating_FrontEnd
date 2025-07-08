@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.marquee-wrapper {
+  overflow: hidden;
+  position: relative;
+  height: 1.5rem;
+}
+
+.marquee-content {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 20s linear infinite;
+}
+
+.marquee-wrapper:hover .marquee-content {
+  animation-play-state: paused;
+}
