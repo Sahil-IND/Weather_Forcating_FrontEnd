@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import WeatherCard from "../src/components/WeatherCard";
 import { getWeatherByCoordinates } from "../services/weatherServiceByCords";
+import { predictRainTomorrow } from "../services/PredictionService";
 
 const LocationWeather = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -13,7 +14,7 @@ const LocationWeather = () => {
 
   const handleGetLocationWeather = () => {
     if (!navigator.geolocation) {
-      alert("Geolocation is not supported by your browser.");
+      toast.error("Geolocation is not supported by your browser.");
       return;
     }
 
@@ -38,7 +39,7 @@ const LocationWeather = () => {
         }
       },
       () => {
-        toast.error("Location access is required to fetch weather.");
+        toast.error("Location access denied.");
         setLoading(false);
       }
     );
@@ -51,20 +52,22 @@ const LocationWeather = () => {
     }
 
     try {
-      const res = await fetch(
-        `http://localhost:8000/predict?latitude=${location.lat}&longitude=${location.lon}`
-      );
-      const data = await res.json();
+      const data = await predictRainTomorrow(location.lat, location.lon);
 
       if (data.will_rain_tomorrow) {
         setPrediction("rain");
-        toast.warning("☔ It will rain tomorrow. Carry an umbrella!");
+        toast.dark("☔ It will rain tomorrow. Carry an umbrella!", {
+          theme: "dark",
+        });
       } else {
         setPrediction("no_rain");
-        toast.success("🌤 No rain expected tomorrow. Enjoy your day!");
+        toast.dark("🌤 No rain expected tomorrow. Enjoy your day!", {
+          theme: "dark",
+        });
       }
 
-      setWeatherData(null); // Hide cards
+      // Hide weather data after prediction
+      setWeatherData(null);
     } catch (err) {
       toast.error("Prediction failed.");
     }
@@ -77,7 +80,7 @@ const LocationWeather = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <ToastContainer />
+      <ToastContainer theme="dark" />
 
       <h1 className="text-4xl font-bold mb-2">📍 My Location Weather</h1>
       <p className="text-lg text-center max-w-2xl mb-6">
@@ -95,13 +98,13 @@ const LocationWeather = () => {
 
         <button
           onClick={handlePredictRain}
-          className="bg-yellow-400 text-black px-8 py-4 rounded-xl font-semibold text-lg shadow hover:bg-yellow-300 transition"
+          className="bg-yellow-400 text-black px-10 py-5 rounded-2xl font-semibold text-lg shadow hover:bg-yellow-300 transition scale-105"
         >
           🌧 Predict Rain Tomorrow
         </button>
       </div>
 
-      {/* Show Weather Cards if data is available and prediction not done */}
+      {/* Weather Info Cards */}
       {weatherData && !prediction && (
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl w-full"
@@ -116,7 +119,7 @@ const LocationWeather = () => {
         </motion.div>
       )}
 
-      {/* Prediction Result Section */}
+      {/* Prediction Outcome */}
       {prediction && (
         <motion.div
           className="mt-10 bg-white/10 p-8 rounded-2xl max-w-xl w-full text-center shadow"
