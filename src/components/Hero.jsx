@@ -35,7 +35,7 @@ const HeroSection = () => {
                 Check City Weather
               </button>
             </Link>
-            <Link to="/my-weather">
+            <Link to="/location-weather">
               <button className="bg-white text-blue-700 px-6 py-3 rounded-lg font-semibold hover:bg-blue-100 hover:scale-105 transition-all duration-300 shadow cursor-pointer">
                 Check Your Location Weather
               </button>

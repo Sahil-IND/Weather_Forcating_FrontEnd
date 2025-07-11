@@ -91,14 +91,14 @@ const LocationWeather = () => {
       <div className="flex flex-wrap gap-4 mb-10">
         <button
           onClick={handleGetLocationWeather}
-          className="bg-white text-blue-700 px-6 py-3 rounded-xl font-semibold shadow hover:bg-gray-200 transition"
+          className="bg-white text-blue-700 px-6 py-3 rounded-xl font-semibold shadow hover:bg-gray-200 transition cursor-pointer"
         >
           {loading ? "Loading..." : "📊 See Weather Info"}
         </button>
 
         <button
           onClick={handlePredictRain}
-          className="bg-yellow-400 text-black px-10 py-5 rounded-2xl font-semibold text-lg shadow hover:bg-yellow-300 transition scale-105"
+          className="bg-yellow-400 text-black px-10 py-5 rounded-2xl font-semibold text-lg shadow hover:bg-yellow-300 transition scale-105 cursor-pointer"
         >
           🌧 Predict Rain Tomorrow
         </button>
