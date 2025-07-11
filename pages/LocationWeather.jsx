@@ -112,10 +112,11 @@ const LocationWeather = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
-          <WeatherCard label="Temperature" value={weatherData.temperature} unit="°C" icon="🌡️" />
-          <WeatherCard label="Humidity" value={weatherData.humidity} unit="%" icon="💧" />
-          <WeatherCard label="Wind Speed" value={weatherData.windSpeed} unit="m/s" icon="💨" />
-          <WeatherCard label="Cloud Cover" value={weatherData.cloudCover} unit="%" icon="☁️" />
+          <WeatherCard title="Temperature" value={weatherData.temperature}  unit="°C" icon="🌡️" />
+
+          <WeatherCard title="Humidity" value={weatherData.humidity}  unit="%" icon="💧" />
+          <WeatherCard title="Wind Speed" value={weatherData.windSpeed}  unit="m/s" icon="💨" />
+          <WeatherCard title="Cloud Cover" value={weatherData.cloudCover}  unit="%" icon="☁️" />
         </motion.div>
       )}
 
